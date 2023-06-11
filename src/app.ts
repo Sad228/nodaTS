@@ -1,4 +1,8 @@
 import express, { Request, Response } from "express";
+import * as mongoose from "mongoose";
+
+import { configs } from "./configs/config";
+import { User } from "./models/User.model";
 
 const users = [
   {
@@ -12,7 +16,7 @@ const users = [
     gender: "male",
   },
   {
-    name: "Inokentiy",
+    name: "Inok",
     age: 25,
     gender: "female",
   },
@@ -35,8 +39,14 @@ app.use(express.urlencoded({ extended: true }));
 
 // CRUD - create, read, update, delete
 
-app.get("/users", (req: Request, res: Response) => {
-  res.status(200).json(users);
+app.get("/users", async (req: Request, res: Response) => {
+  try {
+    const users = await User;
+
+    return res.json(users);
+  } catch (e) {
+    console.log(e);
+  }
 });
 
 app.get("/users/:id", (req: Request, res: Response) => {
@@ -74,8 +84,7 @@ app.delete("/users/:id", (req: Request, res: Response) => {
   });
 });
 
-const PORT = 5001;
-
-app.listen(PORT, () => {
-  console.log(`Server has started on PORT ${PORT}`);
+app.listen(configs.PORT, () => {
+  mongoose.connect(configs.DB_URL);
+  console.log(`Server has started on PORT ${configs.PORT}`);
 });
