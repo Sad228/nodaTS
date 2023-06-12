@@ -4,6 +4,7 @@ import * as mongoose from "mongoose";
 import { configs } from "./configs/config";
 import { User } from "./models/User.model";
 import { IUser } from "./types/user.type";
+import { UserValidator } from "./validators";
 
 // const users = [
 //   {
@@ -69,7 +70,11 @@ app.post(
   "/users",
   async (req: Request, res: Response): Promise<Response<IUser>> => {
     try {
-      const createdUser = await User.create(req.body);
+      const { error, value } = UserValidator.create.validate(req.body);
+      if (error) {
+        throw new Error(error.message);
+      }
+      const createdUser = await User.create(value);
 
       return res.status(201).json(createdUser);
     } catch (e) {
