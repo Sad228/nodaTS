@@ -25,11 +25,7 @@ class UserController {
     next: NextFunction
   ): Promise<Response<IUser>> {
     try {
-      const { error, value } = UserValidator.create.validate(req.body);
-      if (error) {
-        throw new ApiError(error.message, 400);
-      }
-      const createdUser = await userService.create(value);
+      const createdUser = await userService.create(req.res.locals as IUser);
 
       return res.status(201).json(createdUser);
     } catch (e) {
