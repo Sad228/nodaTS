@@ -1,12 +1,12 @@
-import {ApiError} from "../errors";
-import {Token} from "../models/Token.model";
-import {User} from "../models/User.mode";
-import {ICredentials, ITokensPair} from "../types/token.tipes";
-import {IUser} from "../types/user.type";
-import {emailService} from "./email.service";
-import {passwordService} from "./password.service";
-import {tokenService} from "./token.service";
-import {EEmailAction} from "../enums/email.enum";
+import { EEmailAction } from "../enums/email.enum";
+import { ApiError } from "../errors";
+import { Token } from "../models/Token.model";
+import { User } from "../models/User.mode";
+import { ICredentials, ITokensPair } from "../types/token.tipes";
+import { IUser } from "../types/user.type";
+import { emailService } from "./email.service";
+import { passwordService } from "./password.service";
+import { tokenService } from "./token.service";
 
 class AuthService {
   public async register(data: IUser): Promise<void> {
